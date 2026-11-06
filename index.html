@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Um diário digital para guardar suas fotografias e memórias favoritas.">
+  <title>Photo Diary | Meu diário de fotos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="#inicio" aria-label="Photo Diary, início"><span class="logo-mark">✿</span> photo diary</a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+    <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#diario">Meu diário</a>
+      <a href="#linha-do-tempo">Linha do tempo</a>
+      <a href="#colecoes">Coleções</a>
+      <a href="#favoritos">Favoritos</a>
+      <a href="#configuracoes">Configurações</a>
+    </nav>
+    <a class="button button-small header-button" href="#nova-memoria">+ Nova memória</a>
+  </header>
+
+  <main>
+    <section class="hero section" id="inicio">
+      <div class="hero-copy">
+        <p class="eyebrow">UM LUGAR SÓ SEU</p>
+        <h1>Pequenos momentos,<br><em>grandes memórias.</em></h1>
+        <p class="hero-description">Guarde os dias especiais, os detalhes que você ama e aquelas lembranças que merecem ficar para sempre.</p>
+        <a class="button" href="#nova-memoria">Guardar uma memória <span aria-hidden="true">↗</span></a>
+        <div class="stats" aria-label="Resumo do diário">
+          <div><strong id="photo-count">0</strong><span>fotografias</span></div>
+          <div><strong id="memory-count">0</strong><span>memórias</span></div>
+          <div><strong id="favorite-count">0</strong><span>favoritas</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Exemplo decorativo de fotografia estilo Polaroid">
+        <div class="tape"></div>
+        <div class="polaroid hero-polaroid">
+          <div class="hero-photo"><span>✿</span><small>um dia para lembrar</small></div>
+          <p>colecione momentos</p>
+        </div>
+        <span class="scribble scribble-one">little things ♡</span>
+        <span class="scribble scribble-two">memórias</span>
+      </div>
+    </section>
+
+    <section class="section" id="diario">
+      <div class="section-heading">
+        <div><p class="eyebrow">SEU CANTINHO</p><h2>Meu diário de fotos</h2><p class="muted">Cada fotografia guarda um pedacinho da sua história.</p></div>
+        <a class="text-link" href="#nova-memoria">Adicionar memória +</a>
+      </div>
+      <div class="toolbar">
+        <label class="search-box"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Pesquisar memórias..." aria-label="Pesquisar memórias"></label>
+        <label class="visually-hidden" for="category-filter">Filtrar por categoria</label>
+        <select id="category-filter">
+          <option value="todas">Todas as categorias</option>
+          <option value="Cotidiano">Cotidiano</option><option value="Amigos">Amigos</option>
+          <option value="Família">Família</option><option value="Viagens">Viagens</option>
+          <option value="Natureza">Natureza</option><option value="Outros">Outros</option>
+        </select>
+        <label class="visually-hidden" for="sort-order">Ordenar memórias</label>
+        <select id="sort-order"><option value="recentes">Mais recentes</option><option value="antigas">Mais antigas</option><option value="titulo">Ordem alfabética</option></select>
+      </div>
+      <div id="photo-grid" class="photo-grid"></div>
+      <p id="empty-state" class="empty-state">Ainda não há memórias por aqui. Que tal guardar a primeira? ♡</p>
+    </section>
+
+    <section class="section soft-section" id="linha-do-tempo">
+      <div class="section-heading"><div><p class="eyebrow">OLHANDO PARA TRÁS</p><h2>Linha do tempo</h2><p class="muted">Reviva suas lembranças em ordem de data.</p></div></div>
+      <div id="timeline-list" class="timeline-list"></div>
+      <p id="timeline-empty" class="empty-state">Sua história aparecerá aqui quando você adicionar memórias.</p>
+    </section>
+
+    <section class="section" id="colecoes">
+      <div class="section-heading"><div><p class="eyebrow">TUDO NO SEU LUGAR</p><h2>Minhas coleções</h2><p class="muted">Organize suas lembranças por assunto.</p></div></div>
+      <form id="collection-form" class="collection-form">
+        <label for="collection-name">Nome de uma nova coleção</label>
+        <div class="inline-form"><input id="collection-name" maxlength="40" placeholder="Ex.: verão, passeios, pessoas..." required><button class="button" type="submit">Criar coleção</button></div>
+      </form>
+      <div id="collection-grid" class="collection-grid"></div>
+      <p id="collection-empty" class="empty-state">Suas coleções criadas aparecerão aqui.</p>
+    </section>
+
+    <section class="section soft-section" id="favoritos">
+      <div class="section-heading"><div><p class="eyebrow">COM CARINHO</p><h2>Memórias favoritas ♡</h2><p class="muted">Aquelas que você quer encontrar rapidinho.</p></div></div>
+      <div id="favorites-grid" class="photo-grid"></div>
+      <p id="favorites-empty" class="empty-state">Você ainda não favoritou nenhuma memória.</p>
+    </section>
+
+    <section class="section form-section" id="nova-memoria">
+      <div class="section-heading"><div><p class="eyebrow">UM MOMENTO PARA GUARDAR</p><h2 id="form-title">Nova memória</h2><p class="muted">Preencha os detalhes e transforme uma fotografia em lembrança.</p></div></div>
+      <form id="memory-form" class="memory-form">
+        <div class="upload-area">
+          <label class="upload-label" for="memory-image"><span class="upload-icon">＋</span><strong>Escolha uma fotografia</strong><span>Selecione uma imagem do seu dispositivo.</span></label>
+          <input id="memory-image" type="file" accept="image/*">
+          <img id="image-preview" alt="Prévia da fotografia selecionada" hidden>
+          <button id="remove-preview" class="text-button" type="button" hidden>Remover fotografia</button>
+        </div>
+        <div class="form-fields">
+          <label for="memory-title">Título da memória *</label>
+          <input id="memory-title" maxlength="80" placeholder="Ex.: Um fim de tarde especial" required>
+          <label for="memory-caption">Legenda ou história</label>
+          <textarea id="memory-caption" rows="4" maxlength="1000" placeholder="O que aconteceu nesse dia? Por que ele é especial?"></textarea>
+          <div class="form-row">
+            <div><label for="memory-date">Data *</label><input id="memory-date" type="date" required></div>
+            <div><label for="memory-location">Local</label><input id="memory-location" maxlength="100" placeholder="Onde foi?"></div>
+          </div>
+          <div class="form-row">
+            <div><label for="memory-category">Categoria</label><select id="memory-category"><option>Cotidiano</option><option>Amigos</option><option>Família</option><option>Viagens</option><option>Natureza</option><option>Outros</option></select></div>
+            <div><label for="memory-collection">Coleção</label><select id="memory-collection"><option value="">Sem coleção</option></select></div>
+          </div>
+          <label class="check-label"><input id="memory-favorite" type="checkbox"> Marcar como favorita ♡</label>
+          <p id="form-message" class="form-message" role="status"></p>
+          <div class="form-actions"><button class="button" type="submit" id="save-memory-button">Guardar memória</button><button class="button button-quiet" type="reset">Limpar formulário</button></div>
+        </div>
+      </form>
+    </section>
+
+    <section class="section settings-section" id="configuracoes">
+      <div class="section-heading"><div><p class="eyebrow">DO SEU JEITINHO</p><h2>Configurações</h2><p class="muted">Personalize o diário e cuide de uma cópia das suas memórias.</p></div></div>
+      <div class="settings-card">
+        <div><strong>Aparência do diário</strong><p class="muted">Escolha entre o tema claro e o tema escuro.</p></div>
+        <button id="theme-toggle" class="button button-quiet" type="button" aria-pressed="false">☾ Ativar modo escuro</button>
+      </div>
+      <div class="settings-card">
+        <div><strong>Seus dados</strong><p class="muted">Exporte suas memórias em JSON ou importe um arquivo de backup deste diário.</p></div>
+        <div class="settings-actions"><button id="export-data" class="button button-quiet" type="button">Exportar dados</button><label class="button button-quiet import-label" for="import-data">Importar dados</label><input id="import-data" type="file" accept="application/json,.json" hidden></div>
+      </div>
+      <p id="settings-message" class="form-message" role="status"></p>
+      <p class="privacy-note">Suas memórias ficam armazenadas neste navegador. Exporte um backup para não depender apenas deste dispositivo.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="logo" href="#inicio">✿ photo diary</a><p>Feito para guardar pequenos pedaços da vida. ♡</p></footer>
+
+  <dialog id="memory-dialog" class="memory-dialog">
+    <button id="close-dialog" class="dialog-close" type="button" aria-label="Fechar detalhes">×</button>
+    <div id="dialog-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
